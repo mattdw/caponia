@@ -1,7 +1,33 @@
 A simple in-memory full-text-search engine for Clojure, named after a spider.
 
-Includes a Clojure implementation of the Porter Stemmer (see <http://tartarus.org/~martin/PorterStemmer/>).
+Includes a Clojure implementation of the [Porter Stemmer](http://tartarus.org/~martin/PorterStemmer/).
+
+Getting started:
+
+    ;; init
+    (use ['caponia 'index 'query])
+    (def fti (make-index))
+
+    ;; load it up
+    (index-text fti "document-1" "a blob of text")
+    (index-text fti "document-1" [[document-title 2] [document-body 1]])
+
+    ;; query it
+    (do-search fti "blob") ; "and" query by default
+    (do-search fti "a search phrase" :or)
+
+    ;; save to/load from disk
+    (save-index fti "directory/filename.index")
+    ;; ...make some changes...
+    (save-index fti) ; it remembers the filename
+
+    (load-index fti "directory/filename.index")
+    ;; ...make some changes...
+    (save-index fti) ; load also stores the filename
 
 To test (currently only the stemmer):
 
     lein test caponia-stemmer-test
+
+
+Matt Wilson wrote this, with contributions from Andrew Brehaut. It's named after one of [these  guys](http://en.wikipedia.org/wiki/Caponiidae).
