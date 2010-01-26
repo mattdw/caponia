@@ -1,12 +1,17 @@
 (ns caponia.stemmer
   (:use clojure.contrib.str-utils))
 
-(def *excluded-words* (with-meta #{"the" "and" "was" "are" "not" "you" "were" "that" "this" "did" "etc" "there" "they" "our" "their"}
-                                {:doc "Words shorter than three characters are automatically excluded;
-                                       this list only needs to contain words >=3 chars in length."}))
+(def *excluded-words*
+  #^{:doc "Words shorter than three characters are automatically excluded;
+          this list only needs to contain words >=3 chars in length."}
+  #{"the" "and" "was" "are" "not" "you" "were" "that" "this" "did"
+    "etc" "there" "they" "our" "their"})
 
 (declare stem)
 (defn tokenise
+  "tokenise and stem a phrase. e.g.:
+  => (tokenise \"searching a set of words\")
+  (\"search\" \"set\" \"word\")"
   [#^String txt]
   (->> txt
        #^String (re-gsub #"[^-\d\w]+" " ")
