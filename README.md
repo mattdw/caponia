@@ -10,6 +10,10 @@ Getting started:
 
     ;; load it up
     (index-text fti "document-1" "a blob of text")
+
+    ;; you can provide multiple [field weight] pairs. weights are just
+    ;; used as a multiplier for occurrences, for instance to rank title
+    ;; matches higher than body matches.
     (index-text fti "document-1" [[document-title 2] [document-body 1]])
 
     ;; query it
