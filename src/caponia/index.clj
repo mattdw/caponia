@@ -10,10 +10,20 @@
   []
   (agent {}))
 
+;; Functions that take stems
+
 (defn add-entry
-  "Insert an entry into the index, associating {id weight} with stem"
-  [index stem id weight]
-  (send index assoc-in [stem id] weight))
+  "Insert an entry into the index, associating {key weight} with stem"
+  [index stem key weight]
+  (send index assoc-in [stem key] weight))
+
+(defn remove-entries
+  "dissociate key from stems"
+  [index key stems]
+  (doseq [stem (set stems)]
+    (send index update-in [stem] #(dissoc % key))))
+
+;; Functions that take blocks of text
 
 (defn index-text
   "Index a chunk of text.
@@ -41,6 +51,20 @@
      (apply merge-with +)
      (map (fn [[stem num]] (add-entry index stem key num)))
      (doall))))
+
+(defn unindex-text
+  "remove all entries for [key txt]."
+  [index key txt]
+  (remove-entries index key (tokenise txt))
+  nil)
+
+(defn unindex-all
+  "remove *all* entries for key. Traverses the entire index."
+  [index key]
+  (send index (fn [state] (reduce #(update-in %1 [%2] dissoc key) state (keys state))))
+  nil)
+
+;; Disk persistence
 
 (defn save-index
   "Serialise an index to a file. The index stores the filename in metadata,
