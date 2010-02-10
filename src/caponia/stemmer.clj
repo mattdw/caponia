@@ -158,6 +158,6 @@
       (if (< (count word) 3)
         word
         (let [[starts-with-y? w] (step-y1 word)]
-          (reduce #(%2 %1) w
-                  [step1a step1b step1c step2 step3 step4 step5 step6
-                   (partial step-y2 starts-with-y?)]))))))
+          (->> w
+               step1a step1b step1c step2 step3 step4 step5 step6
+               (step-y2 starts-with-y?)))))))
