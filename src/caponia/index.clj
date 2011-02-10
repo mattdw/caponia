@@ -1,6 +1,6 @@
 (ns caponia.index
   (:use
-     caponia.stemmer
+     [stemmers.core :only [stems]]
      clojure.contrib.duck-streams
      clojure.contrib.str-utils
      clojure.contrib.seq-utils))
@@ -47,7 +47,7 @@
      (let [data (if (coll? data) data [[data 1]])]
        (for [[text-block multiplier] data]
          (into {}
-         (->> (tokenise text-block)
+         (->> (stems text-block)
               (frequencies)
               (map (fn [[stem num]] [stem (* num multiplier)]))))))
      (apply merge-with +)
@@ -57,7 +57,7 @@
 (defn unindex-text
   "remove all entries for [key txt]."
   [index key txt]
-  (remove-entries index key (tokenise txt))
+  (remove-entries index key (stems txt))
   nil)
 
 (defn unindex-all

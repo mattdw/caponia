@@ -1,12 +1,12 @@
 (ns caponia.query
-  (:use caponia.stemmer))
+  (:use [stemmers :only [stems]]))
 
 (defn query
   "Retrieve all matches for query-string's stems from index."
   [index query-string]
-  (let [stems (tokenise query-string)]
+  (let [all-stems (stems query-string)]
     (into {}
-          (for [stem stems]
+          (for [stem all-stems]
             [stem (get @index stem)]))))
 
 (defn merge-and

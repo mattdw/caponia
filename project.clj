@@ -1,5 +1,7 @@
-(defproject caponia "0.2"
+(defproject caponia "0.3"
   :description "A simple in-memory full-text search library"
   :url "http://github.com/mattdw/caponia"
-  :dependencies [[org.clojure/clojure "1.1.0-master-SNAPSHOT"]
-                 [org.clojure/clojure-contrib "1.0-SNAPSHOT"]])
+  :dependencies [[org.clojure/clojure "1.2.0"]
+                 [org.clojure/clojure-contrib "1.2.0"]
+                 [stemmers "0.2.1"]]
+  :dev-dependencies [[marginalia "0.3.2"]])
