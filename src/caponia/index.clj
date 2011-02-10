@@ -10,7 +10,7 @@
   []
   (agent {}))
 
-;; Functions that take stems
+;; ## Functions that take stems
 
 (defn add-entry
   "Insert an entry into the index, associating {key weight} with stem"
@@ -23,21 +23,23 @@
   (doseq [stem (set stems)]
     (send index update-in [stem] #(dissoc % key))))
 
-;; Functions that take blocks of text
+;; ## Functions that take blocks of text
 
 (defn index-text
-  "Index a chunk of text.
+  "Indexes a chunk of text.
 
-  'key' is an id for your reference.
-  'data' can be:
-    - single string
-    - a seq of [txt weight] pairs.
-  'weight' is a multiplier for occurrences
+   - `key` is an id for your reference.
+   - `data` can be:
+     - single string
+     - a seq of [txt weight] pairs.
+   - `weight` is a multiplier for occurrences.
 
-  for example:
-    (index doc-id doc-body) ;; defaults to weight=1
-    (index doc-id doc-body 3)
-    (index doc-id [[doc-body 1] [doc-title 2] [doc-tags 2]])"
+   For example:
+
+       (index doc-id doc-body) ;; defaults to weight=1
+       (index doc-id doc-body 3)
+       (index doc-id [[doc-body 1] [doc-title 2] [doc-tags 2]])
+  "
   ([index key txt weight]
    (index-text index key [[txt 1]]))
   ([index key data]
@@ -64,20 +66,18 @@
   (send index (fn [state] (reduce #(update-in %1 [%2] dissoc key) state (keys state))))
   nil)
 
-;; Disk persistence
+;; ## Disk persistence
 
 (defn save-index
   "Serialise an index to a file. The index stores the filename in metadata,
   and will save to that on subsequent saves."
-  ;; save to stored filename
-  ([index]
+  ([index] ; save to previous filename
    (if-let [{:keys [file]} (meta @index)]
      (binding [*out* (writer file)]
        (prn @index))
      (throw (Exception. "No filename specified")))
    index)
-  ;; set filename, then save
-  ([index filename-or-file]
+  ([index filename-or-file] ; save to specified filename
    (send index with-meta {:file filename-or-file})
    (await index)
    (save-index index)))
