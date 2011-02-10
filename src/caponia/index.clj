@@ -1,9 +1,8 @@
 (ns caponia.index
   (:use
-     [stemmers.core :only [stems]]
-     clojure.contrib.duck-streams
-     clojure.contrib.str-utils
-     clojure.contrib.seq-utils))
+   [stemmers.core :only [stems]])
+  (:require
+   [clojure.contrib.duck-streams :as ducks]))
 
 (defn make-index
   "Create a new (empty) index."
@@ -73,7 +72,7 @@
   and will save to that on subsequent saves."
   ([index] ; save to previous filename
    (if-let [{:keys [file]} (meta @index)]
-     (binding [*out* (writer file)]
+     (binding [*out* (ducks/writer file)]
        (prn @index))
      (throw (Exception. "No filename specified")))
    index)
@@ -85,5 +84,5 @@
 (defn load-index
   "Load a serialised index from a file, storing the filename in meta."
   [index filename-or-file]
-  (send index (fn [_] (with-meta (with-in-reader filename-or-file (read *in*))
+  (send index (fn [_] (with-meta (ducks/with-in-reader filename-or-file (read *in*))
                                  {:file filename-or-file}))))

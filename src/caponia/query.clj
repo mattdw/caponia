@@ -1,5 +1,5 @@
 (ns caponia.query
-  (:use [stemmers :only [stems]]))
+  (:use [stemmers.core :only [stems]]))
 
 (defn query
   "Retrieve all matches for query-string's stems from index."
