@@ -2526,13 +2526,12 @@ $(document).ready(function() {
   color: #2a00ff !important;
 }
 </style><style type="text/css">html{margin:0;padding:0;}h1{margin:0;padding:0;}h2{margin:0;padding:0;}h3{margin:0;padding:0;}h4{margin:0;padding:0;}a{color:#261A3B;}a:visited{color:#261A3B;}</style><style type="text/css">.header{margin-top:30px;}h1.project-name{font-size:34px;display:inline;}h2.project-version{font-size:18px;margin-top:0;display:inline;margin-left:10px;}.toc-link{font-size:12px;margin-left:10px;color:#252519;text-decoration:none;}.toc-link:hover{color:#5050A6;}.toc h1{font-size:34px;margin:0;}.docs-header{border-bottom:dotted #aaa 1px;padding-bottom:10px;margin-bottom:25px;}.toc h1{font-size:24px;}.toc{border-bottom:solid #bbb 1px;margin-bottom:40px;}.toc ul{margin-left:20px;padding-left:0px;padding-top:0;margin-top:0;}.toc li{list-style-type:none;padding-left:0;}.dependencies{}.dependencies table{font-size:16px;width:99.99%;border:none;margin-left:20px;}.dependencies td{padding-right:20px;;white-space:nowrap;}.dependencies .dotted{width:99%;}.dependencies .dotted hr{margin-bottom:-6px;noshade:noshade;border-top:none;color:transparent;border-left:none;border-bottom:dotted #bbb 1px;border-right:none;background-color:transparent;height:0;}.dependencies .dep-version{text-align:right;}.plugins ul{margin-left:20px;padding-left:0px;padding-top:0;margin-top:0;}.plugins li{list-style-type:none;padding-left:0;}.header p{margin-left:20px;}</style><style type="text/css">#floating-toc{position:fixed;top:10px;right:20px;height:20px;overflow:hidden;text-align:right;}#floating-toc li{list-style-type:none;margin:0;padding:0;}</style><style type="text/css">body{margin:0;padding:0;font-family:'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;;font-size:16px;color:#252519;}h1{font-size:20px;margin-top:0;}a.anchor{text-decoration:none;color:#252519;}a.anchor:hover{color:#5050A6;}table{border-spacing:0;border-bottom:solid #ddd 1px;;margin-bottom:10px;}code{display:inline;}p{margin-top:8px;}tr{margin:0px;padding:0px;}td.docs{width:410px;max-width:410px;vertical-align:top;margin:0px;padding-left:55px;padding-right:20px;border:none;}td.docs pre{font-size:12px;overflow:hidden;}td.codes{border:none;margin:0px;padding-left:20px;width:55%;border-left:solid #E5E5EE 1px;font-size:10pt;vertical-align:top;overflow:hidden;background-color:#F5F5FF;}td.spacer{padding-bottom:40px;}pre code{display:block;padding:4px;}code{background-color:ghostWhite;border:solid #DEDEDE 1px;padding-left:3px;padding-right:3px;font-size:14px;}.syntaxhighlighter code{font-size:13px;}.footer{text-align:center;}</style><title>caponia -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">caponia</h1><h2 class="project-version">0.3</h2><br /><p>A simple in-memory full-text search library</p>
-</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">org.clojure/clojure-contrib</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr></table></div><div class="dependencies"><h3>dev dependencies</h3><table><tr><td class="dep-name">marginalia</td><td class="dotted"><hr /></td><td class="dep-version">0.3.2</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#caponia.index">caponia.index</a></li><li><a href="#caponia.query">caponia.query</a></li><li><a href="#caponia.stemmer">caponia.stemmer</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#caponia.index" name="caponia.index"><h1 class="project-name">caponia.index</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">org.clojure/clojure-contrib</td><td class="dotted"><hr /></td><td class="dep-version">1.2.0</td></tr><tr><td class="dep-name">stemmers</td><td class="dotted"><hr /></td><td class="dep-version">0.2.1</td></tr></table></div><div class="dependencies"><h3>dev dependencies</h3><table><tr><td class="dep-name">marginalia</td><td class="dotted"><hr /></td><td class="dep-version">0.3.2</td></tr><tr><td class="dep-name">swank-clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.3.0-SNAPSHOT</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#caponia.index">caponia.index</a></li><li><a href="#caponia.query">caponia.query</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#caponia.index" name="caponia.index"><h1 class="project-name">caponia.index</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(ns caponia.index
   (:use
-     caponia.stemmer
-     clojure.contrib.duck-streams
-     clojure.contrib.str-utils
-     clojure.contrib.seq-utils))</pre></td></tr><tr><td class="docs"><p>Create a new (empty) index.</p>
+   [stemmers.core :only [stems]])
+  (:require
+   [clojure.contrib.duck-streams :as ducks]))</pre></td></tr><tr><td class="docs"><p>Create a new (empty) index.</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn make-index
   []
@@ -2572,7 +2571,7 @@ $(document).ready(function() {
      (let [data (if (coll? data) data [[data 1]])]
        (for [[text-block multiplier] data]
          (into {}
-         (-&gt;&gt; (tokenise text-block)
+         (-&gt;&gt; (stems text-block)
               (frequencies)
               (map (fn [[stem num]] [stem (* num multiplier)]))))))
      (apply merge-with +)
@@ -2581,7 +2580,7 @@ $(document).ready(function() {
 </td><td class="codes"><pre class="brush: clojure">
 (defn unindex-text
   [index key txt]
-  (remove-entries index key (tokenise txt))
+  (remove-entries index key (stems txt))
   nil)</pre></td></tr><tr><td class="docs"><p>remove <em>all</em> entries for key. Traverses the entire index.</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn unindex-all
@@ -2594,7 +2593,7 @@ $(document).ready(function() {
 (defn save-index
   ([index] ; save to previous filename
    (if-let [{:keys [file]} (meta @index)]
-     (binding [*out* (writer file)]
+     (binding [*out* (ducks/writer file)]
        (prn @index))
      (throw (Exception. &quot;No filename specified&quot;)))
    index)
@@ -2605,16 +2604,16 @@ $(document).ready(function() {
 </td><td class="codes"><pre class="brush: clojure">
 (defn load-index
   [index filename-or-file]
-  (send index (fn [_] (with-meta (with-in-reader filename-or-file (read *in*))
+  (send index (fn [_] (with-meta (ducks/with-in-reader filename-or-file (read *in*))
                                  {:file filename-or-file}))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#caponia.query" name="caponia.query"><h1 class="project-name">caponia.query</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(ns caponia.query
-  (:use caponia.stemmer))</pre></td></tr><tr><td class="docs"><p>Retrieve all matches for query-string's stems from index.</p>
+  (:use [stemmers.core :only [stems]]))</pre></td></tr><tr><td class="docs"><p>Retrieve all matches for query-string's stems from index.</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn query
   [index query-string]
-  (let [stems (tokenise query-string)]
+  (let [all-stems (stems query-string)]
     (into {}
-          (for [stem stems]
+          (for [stem all-stems]
             [stem (get @index stem)]))))</pre></td></tr><tr><td class="docs"><p>Process query results by AND; only return [id weights] which
   matched all stems.</p>
 </td><td class="codes"><pre class="brush: clojure">
@@ -2640,167 +2639,5 @@ $(document).ready(function() {
    (do-search index term :and))
   ([index term merge-style]
    (let [merge-func (if (= merge-style :and) merge-and merge-or)]
-     (reverse (sort-by second (merge-func (query index term)))))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#caponia.stemmer" name="caponia.stemmer"><h1 class="project-name">caponia.stemmer</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(ns caponia.stemmer
-  (:use clojure.contrib.str-utils))</pre></td></tr><tr><td class="docs"><p>Words shorter than three characters are automatically
-excluded. This list only needs to contain words greater than 3</p>
-</td><td class="codes"><pre class="brush: clojure"></pre></td></tr><tr><td class="docs"><p>chars in length.</p>
-</td><td class="codes"><pre class="brush: clojure">(def *excluded-words*
-  #{&quot;the&quot; &quot;and&quot; &quot;was&quot; &quot;are&quot; &quot;not&quot; &quot;you&quot; &quot;were&quot; &quot;that&quot; &quot;this&quot; &quot;did&quot;
-    &quot;etc&quot; &quot;there&quot; &quot;they&quot; &quot;our&quot; &quot;their&quot;})
-</pre></td></tr><tr><td class="docs"><p>Tokenise and stem a phrase. e.g.:</p>
-
-<pre><code>=&gt; (tokenise "searching a set of words")
-("search" "set" "word")
-</code></pre>
-</td><td class="codes"><pre class="brush: clojure">(declare stem)
-(defn tokenise
-  [#^String txt]
-  (-&gt;&gt; txt
-       #^String (re-gsub #&quot;[^-\d\w]+&quot; &quot; &quot;)
-       (.toLowerCase)</pre></td></tr><tr><td class="docs"><p>Expand hyphenated-word into [hyphenated-word hyphenated word]</p>
-</td><td class="codes"><pre class="brush: clojure">       (re-split #&quot;\s+&quot;)
-       (mapcat (fn [#^String w] (if (.contains w &quot;-&quot;) (conj (seq (.split w &quot;-&quot;)) w) [w])))
-       (filter #(and (&gt;= (count %) 3) (not (some *excluded-words* %)) (&lt;= (count %) 30)))
-       (map stem)))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">
-(def stem
-  #^{:doc &quot;An implementation of the Porter Stemmer algorithm, detailed at
-           http://tartarus.org/~martin/PorterStemmer/&quot;
-     :tag String}
-  (let [c &quot;[^aeiou]&quot;
-        v &quot;[aeiouy]&quot;
-        cs (str c &quot;[^aeiouy]*&quot;)
-        vs (str v &quot;[aeiou]*&quot;)
-        mgr0 (re-pattern (str &quot;^(&quot; cs &quot;)?&quot; vs cs))
-        meq1 (re-pattern (str &quot;^(&quot; cs &quot;)?&quot; vs cs &quot;(&quot; vs &quot;)?$&quot;))
-        mgr1 (re-pattern (str &quot;^(&quot; cs &quot;)?&quot; vs cs vs cs))
-        s_v  (re-pattern (str &quot;^(&quot; cs &quot;)?&quot; vs))
-
-        step1a-re1 #&quot;^(.+?)(ss|i)es$&quot;
-        step1a-re2 #&quot;^(.+?)([^s])s$&quot;
-        step1a (fn [w]
-                 (cond
-                   (re-find step1a-re1 w) (re-sub step1a-re1 &quot;$1$2&quot; w)
-                   (re-find step1a-re2 w) (re-sub step1a-re2 &quot;$1$2&quot; w)
-                   :otherwise w))
-
-        step1b-re1 #&quot;^(.+?)eed$&quot;
-        step1b-re2 #&quot;^(.+?)(ed|ing)$&quot;
-        step1b-stem1 #&quot;(at|bl|iz)$&quot;
-        step1b-stem2 #&quot;([^aeiouylsz])\1$&quot;
-        step1b-stem3 (re-pattern (str &quot;^&quot; cs v &quot;[^aeiouwxy]$&quot;))
-        step1b (fn [w]
-                 (let [groups1 (re-find step1b-re1 w)
-                       groups2 (re-find step1b-re2 w)]
-                   (cond
-                     groups1 (if (re-find mgr0 (groups1 1))
-                               (apply str (butlast w))
-                               w)
-                     groups2 (let [stem (groups2 1)]
-                               (if (re-find s_v stem)
-                                 (cond
-                                   (re-find step1b-stem1 stem) (str stem &quot;e&quot;)
-                                   (re-find step1b-stem2 stem) (apply str (butlast stem))
-                                   (re-find step1b-stem3 stem) (str stem &quot;e&quot;)
-                                   :otherwise stem)
-                                 w))
-                     :otherwise w)))
-
-        step1c-re1 #&quot;^(.+?)y$&quot;
-        step1c (fn [w]
-                 (if-let [[_ stem &amp; _] (re-find step1c-re1 w)]
-                   (if (re-find s_v stem) (str stem &quot;i&quot;) w)
-                   w))
-
-        apply-suffix-map (fn [suffix-map #^String w]
-                           (if-let [[stem suffix]
-                                    (first (for [key (keys suffix-map)
-                                                 :when (.endsWith w key)]
-                                             [(.substring w 0 (- (count w) (count key))) key]))]
-                             (if (re-find mgr0 stem)
-                               (str stem (suffix-map suffix))
-                               w)
-                             w))
-
-        step2-map {&quot;ational&quot; &quot;ate&quot;
-                   &quot;tional&quot; &quot;tion&quot;
-                   &quot;enci&quot; &quot;ence&quot;
-                   &quot;anci&quot; &quot;ance&quot;
-                   &quot;izer&quot; &quot;ize&quot;
-                   &quot;bli&quot; &quot;ble&quot;
-                   &quot;alli&quot; &quot;al&quot;
-                   &quot;entli&quot; &quot;ent&quot;
-                   &quot;eli&quot; &quot;e&quot;
-                   &quot;ousli&quot; &quot;ous&quot;
-                   &quot;ization&quot; &quot;ize&quot;
-                   &quot;ation&quot; &quot;ate&quot;
-                   &quot;ator&quot; &quot;ate&quot;
-                   &quot;alism&quot; &quot;al&quot;
-                   &quot;iveness&quot; &quot;ive&quot;
-                   &quot;fulness&quot; &quot;ful&quot;
-                   &quot;ousness&quot; &quot;ous&quot;
-                   &quot;aliti&quot; &quot;al&quot;
-                   &quot;iviti&quot; &quot;ive&quot;
-                   &quot;biliti&quot; &quot;ble&quot;
-                   &quot;logi&quot; &quot;log&quot;}
-        step2 (partial apply-suffix-map step2-map)
-
-        step3-map {&quot;icate&quot; &quot;ic&quot;
-                   &quot;ative&quot; &quot;&quot;
-                   &quot;alize&quot; &quot;al&quot;
-                   &quot;iciti&quot; &quot;ic&quot;
-                   &quot;ical&quot; &quot;ic&quot;
-                   &quot;ful&quot; &quot;&quot;
-                   &quot;ness&quot; &quot;&quot;}
-        step3 (partial apply-suffix-map step3-map)
-
-        step4-suffixes1 [&quot;al&quot; &quot;ance&quot; &quot;ence&quot; &quot;er&quot; &quot;ic&quot; &quot;able&quot; &quot;ible&quot; &quot;ant&quot; &quot;ement&quot;
-                         &quot;ment&quot; &quot;ent&quot; &quot;ou&quot; &quot;ism&quot; &quot;ate&quot; &quot;iti&quot; &quot;ous&quot; &quot;ive&quot; &quot;ize&quot;]
-        step4-re1 #&quot;^(.+?)(s|t)(ion)$&quot;
-        step4 (fn [#^String w]
-                (if-let [stem (first (for [suffix step4-suffixes1
-                                           :when (.endsWith w suffix)]
-                                       (.substring w 0 (- (count w) (count suffix)))))]
-                  (if (re-find mgr1 stem) stem w)
-                  (if-let [groups (re-find step4-re1 w)]
-                    (let [stem (str (groups 1) (groups 2))]
-                      (if (re-find mgr1 stem) stem w))
-                    w)))
-
-        step5-re1 #&quot;^(.+?)e$&quot;
-        step5-re2 (re-pattern (str &quot;^&quot; cs v &quot;[^aeiouwxy]$&quot;))
-        step5 (fn [w]
-                (if-let [[_ stem &amp; _] (re-find step5-re1 w)]
-                  (if (or (re-find mgr1 stem)
-                          (and (re-find meq1 stem) (not (re-find step5-re2 stem))))
-                    stem
-                    w)
-                  w))
-
-        step6-re #&quot;ll$&quot;
-        step6 (fn [w]
-                (if (and (re-find step6-re w) (re-find mgr1 w))
-                  (apply str (butlast w))
-                  w))
-
-        step-y1 (fn [#^String w]
-                  (let [firstch (.substring w 0 1)
-                        firstch-y? (= firstch &quot;y&quot;)]
-                    [firstch-y? (if firstch-y?
-                                  (str &quot;Y&quot; (.substring w 1))
-                                  w)]))
-        step-y2 (fn [firstch-y? #^String w]
-                  (if firstch-y?
-                    (str (.toLowerCase #^String (.substring w 0 1))
-                         (.substring w 1))
-                    w))]
-
-    (fn [word]
-      (if (&lt; (count word) 3)
-        word
-        (let [[starts-with-y? w] (step-y1 word)]
-          (-&gt;&gt; w
-               step1a step1b step1c step2 step3 step4 step5 step6
-               (step-y2 starts-with-y?)))))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/fogus/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a><div id="floating-toc"><ul><li class="floating-toc-li" id="floating-toc_caponia.index">caponia.index</li><li class="floating-toc-li" id="floating-toc_caponia.query">caponia.query</li><li class="floating-toc-li" id="floating-toc_caponia.stemmer">caponia.stemmer</li></ul></div></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
+     (reverse (sort-by second (merge-func (query index term)))))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/fogus/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a><div id="floating-toc"><ul><li class="floating-toc-li" id="floating-toc_caponia.index">caponia.index</li><li class="floating-toc-li" id="floating-toc_caponia.query">caponia.query</li></ul></div></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
        SyntaxHighlighter.all()</script></body></html>
