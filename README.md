@@ -1,7 +1,5 @@
 A simple in-memory full-text-search engine for Clojure, named after a spider.
 
-Includes a Clojure implementation of the [Porter Stemmer](http://tartarus.org/~martin/PorterStemmer/).
-
 Getting started:
 
     ;; init
@@ -28,10 +26,5 @@ Getting started:
     (load-index fti "directory/filename.index")
     ;; ...make some changes...
     (save-index fti) ; load also stores the filename
-
-To test (currently only the stemmer):
-
-    lein test caponia-stemmer-test
-
 
 Matt Wilson wrote this, with contributions from Andrew Brehaut. It's named after one of [these  guys](http://en.wikipedia.org/wiki/Caponiidae).
