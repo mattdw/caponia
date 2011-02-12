@@ -2531,21 +2531,26 @@ $(document).ready(function() {
   (:use
    [stemmers.core :only [stems]])
   (:require
-   [clojure.contrib.duck-streams :as ducks]))</pre></td></tr><tr><td class="docs"><p>Create a new (empty) index.</p>
+   [clojure.contrib.duck-streams :as ducks]
+   [stemmers.porter]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">
+(defrecord Index [data stemmer])</pre></td></tr><tr><td class="docs"><p>Create a new (empty) index. Takes an optional stemmer function</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn make-index
-  []
-  (agent {}))</pre></td></tr><tr><td class="docs"><h2>Functions that take stems</h2>
+  ([]
+     (make-index stemmers.porter/stem))
+  ([stemmer-func]
+     (agent (Index. {} stemmer-func))))</pre></td></tr><tr><td class="docs"><h2>Functions that take stems</h2>
 </td><td class="codes"><pre class="brush: clojure"></pre></td></tr><tr><td class="docs"><p>Insert an entry into the index, associating {key weight} with stem</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn add-entry
   [index stem key weight]
-  (send index assoc-in [stem key] weight))</pre></td></tr><tr><td class="docs"><p>dissociate key from stems</p>
+  (send index assoc-in [:data stem key] weight))</pre></td></tr><tr><td class="docs"><p>dissociate key from stems</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn remove-entries
   [index key stems]
   (doseq [stem (set stems)]
-    (send index update-in [stem] #(dissoc % key))))</pre></td></tr><tr><td class="docs"><h2>Functions that take blocks of text</h2>
+    (send index update-in [:data stem] #(dissoc % key))))</pre></td></tr><tr><td class="docs"><h2>Functions that take blocks of text</h2>
 </td><td class="codes"><pre class="brush: clojure"></pre></td></tr><tr><td class="docs"><p>Indexes a chunk of text.</p>
 
 <ul>
@@ -2565,56 +2570,56 @@ $(document).ready(function() {
 </td><td class="codes"><pre class="brush: clojure">
 (defn index-text
   ([index key txt weight]
-   (index-text index key [[txt 1]]))
+     (index-text index key [[txt 1]]))
   ([index key data]
-   (-&gt;&gt;
-     (let [data (if (coll? data) data [[data 1]])]
-       (for [[text-block multiplier] data]
-         (into {}
-         (-&gt;&gt; (stems text-block)
-              (frequencies)
-              (map (fn [[stem num]] [stem (* num multiplier)]))))))
-     (apply merge-with +)
-     (map (fn [[stem num]] (add-entry index stem key num)))
-     (doall))))</pre></td></tr><tr><td class="docs"><p>remove all entries for [key txt].</p>
+     (-&gt;&gt;
+      (let [data (if (coll? data) data [[data 1]])]
+        (for [[text-block multiplier] data]
+          (into {}
+                (-&gt;&gt; (stems text-block (:stemmer @index))
+                     (frequencies)
+                     (map (fn [[stem num]] [stem (* num multiplier)]))))))
+      (apply merge-with +)
+      (map (fn [[stem num]] (add-entry index stem key num)))
+      (doall))))</pre></td></tr><tr><td class="docs"><p>remove all entries for [key txt].</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn unindex-text
   [index key txt]
-  (remove-entries index key (stems txt))
+  (remove-entries index key (stems txt (:stemmer @index)))
   nil)</pre></td></tr><tr><td class="docs"><p>remove <em>all</em> entries for key. Traverses the entire index.</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn unindex-all
   [index key]
-  (send index (fn [state] (reduce #(update-in %1 [%2] dissoc key) state (keys state))))
+  (send index update-in [:data] (fn [state] (reduce #(update-in %1 [%2] dissoc key) state (keys state))))
   nil)</pre></td></tr><tr><td class="docs"><h2>Disk persistence</h2>
-</td><td class="codes"><pre class="brush: clojure"></pre></td></tr><tr><td class="docs"><p>Serialise an index to a file. The index stores the filename in metadata,
+</td><td class="codes"><pre class="brush: clojure"></pre></td></tr><tr><td class="docs"><p>Serialise an index to a file. The index stores the filename with the index,
   and will save to that on subsequent saves.</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn save-index
   ([index] ; save to previous filename
-   (if-let [{:keys [file]} (meta @index)]
-     (binding [*out* (ducks/writer file)]
-       (prn @index))
-     (throw (Exception. &quot;No filename specified&quot;)))
-   index)
+     (if-let [file (:file-storage-name @index)]
+       (binding [*out* (ducks/writer file)]
+         (prn (:data @index)))
+       (throw (Exception. &quot;No filename specified&quot;)))
+     index)
   ([index filename-or-file] ; save to specified filename
-   (send index with-meta {:file filename-or-file})
-   (await index)
-   (save-index index)))</pre></td></tr><tr><td class="docs"><p>Load a serialised index from a file, storing the filename in meta.</p>
+     (send index assoc :file-storage-name filename-or-file)
+     (await index)
+     (save-index index)))</pre></td></tr><tr><td class="docs"><p>Load a serialised index from a file, storing the filename in meta.</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn load-index
   [index filename-or-file]
-  (send index (fn [_] (with-meta (ducks/with-in-reader filename-or-file (read *in*))
-                                 {:file filename-or-file}))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#caponia.query" name="caponia.query"><h1 class="project-name">caponia.query</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+  (send index (fn [_] {:data     (ducks/with-in-reader filename-or-file (read *in*))
+                      :file-storage-name filename-or-file})))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#caponia.query" name="caponia.query"><h1 class="project-name">caponia.query</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(ns caponia.query
-  (:use [stemmers.core :only [stems]]))</pre></td></tr><tr><td class="docs"><p>Retrieve all matches for query-string's stems from index.</p>
+  (:use [stemmers.core :only [stems]]))</pre></td></tr><tr><td class="docs"><p>Retrieve all matches for <code>query-string</code>'s stems from <code>index</code>.</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn query
   [index query-string]
-  (let [all-stems (stems query-string)]
+  (let [all-stems (stems query-string (:stemmer @index))]
     (into {}
           (for [stem all-stems]
-            [stem (get @index stem)]))))</pre></td></tr><tr><td class="docs"><p>Process query results by AND; only return [id weights] which
+            [stem (get-in @index [:data stem])]))))</pre></td></tr><tr><td class="docs"><p>Process query results by AND; only return <code>[id weight]</code> which
   matched all stems.</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn merge-and
@@ -2626,13 +2631,13 @@ $(document).ready(function() {
               (for [id ids]
                 [id (apply *
                            (for [result-set all-vals]
-                             (get result-set id 0)))])))))</pre></td></tr><tr><td class="docs"><p>Get all matched [id weights], where weight is the sum of
+                             (get result-set id 0)))])))))</pre></td></tr><tr><td class="docs"><p>Get all matched <code>[id weight]</code>, where weight is the sum of
   all occurrences.</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn merge-or
   [query-results]
   (apply merge-with + (vals query-results)))</pre></td></tr><tr><td class="docs"><p>Do a search, merging results as indicated by merge-style.
-  Defaults to :and.</p>
+  Defaults to <code>:and</code>.</p>
 </td><td class="codes"><pre class="brush: clojure">
 (defn do-search
   ([index term]

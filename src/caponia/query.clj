@@ -2,15 +2,15 @@
   (:use [stemmers.core :only [stems]]))
 
 (defn query
-  "Retrieve all matches for query-string's stems from index."
+  "Retrieve all matches for `query-string`'s stems from `index`."
   [index query-string]
-  (let [all-stems (stems query-string)]
+  (let [all-stems (stems query-string (:stemmer @index))]
     (into {}
           (for [stem all-stems]
-            [stem (get @index stem)]))))
+            [stem (get-in @index [:data stem])]))))
 
 (defn merge-and
-  "Process query results by AND; only return [id weights] which
+  "Process query results by AND; only return `[id weight]` which
   matched all stems."
   [query-results]
   (let [ids (set (mapcat (comp keys second) query-results))
@@ -23,14 +23,14 @@
                              (get result-set id 0)))])))))
 
 (defn merge-or
-  "Get all matched [id weights], where weight is the sum of
+  "Get all matched `[id weight]`, where weight is the sum of
   all occurrences."
   [query-results]
   (apply merge-with + (vals query-results)))
 
 (defn do-search
   "Do a search, merging results as indicated by merge-style.
-  Defaults to :and."
+  Defaults to `:and`."
   ([index term]
    (do-search index term :and))
   ([index term merge-style]

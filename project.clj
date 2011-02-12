@@ -1,4 +1,4 @@
-(defproject caponia "0.3"
+(defproject caponia "0.3.2"
   :description "A simple in-memory full-text search library"
   :url "http://github.com/mattdw/caponia"
   :dependencies [[org.clojure/clojure "1.2.0"]
