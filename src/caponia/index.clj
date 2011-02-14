@@ -56,7 +56,7 @@
                      (map (fn [[stem num]] [stem (* num multiplier)]))))))
       (apply merge-with +)
       (map (fn [[stem num]] (add-entry index stem key num)))
-      (doall))))
+      (dorun))))
 
 (defn unindex-text
   "remove all entries for [key txt]."
