@@ -1,7 +1,7 @@
-(defproject caponia "0.3.2"
+(defproject caponia "0.3.3"
   :description "A simple in-memory full-text search library"
   :url "http://github.com/mattdw/caponia"
+  :license "Eclipse Public License 1.0"
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [stemmers "0.2.1"]]
-  :dev-dependencies [[marginalia "0.3.2"]
-                     [swank-clojure "1.3.0-SNAPSHOT"]])
+                 [stemmers "0.2.2"]]
+  :plugins [[lein-marginalia "0.8.0"]])
