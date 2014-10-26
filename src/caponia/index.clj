@@ -2,7 +2,8 @@
   (:use
    [stemmers.core :only [stems]])
   (:require
-   [clojure.contrib.duck-streams :as ducks]
+   [clojure.java.io :as io]
+   [clojure.edn :as edn]
    [stemmers.porter]))
 
 (defrecord Index [data stemmer])
@@ -77,7 +78,7 @@
   and will save to that on subsequent saves."
   ([index] ; save to previous filename
      (if-let [file (:file-storage-name @index)]
-       (binding [*out* (ducks/writer file)]
+       (binding [*out* (io/writer file)]
          (prn (:data @index)))
        (throw (Exception. "No filename specified")))
      index)
@@ -89,5 +90,5 @@
 (defn load-index
   "Load a serialised index from a file, storing the filename in meta."
   [index filename-or-file]
-  (send index (fn [_] {:data     (ducks/with-in-reader filename-or-file (read *in*))
-                      :file-storage-name filename-or-file})))
+  (send index assoc :data (edn/read-string (slurp filename-or-file)))
+  (send index assoc :file-storage-name filename-or-file))
